@@ -4,7 +4,7 @@ const generateAbout = (aboutText) => {
   if (!aboutText) {
     return "";
   }
-
+  // template literal `` embeds JS expressions into string
   return `
     section class="my-3" id="about">
       <h2 class="text-dark bg-primary p-2 display-inline-block">About Me</h2>
@@ -13,6 +13,7 @@ const generateAbout = (aboutText) => {
     `;
 };
 
+// create projects section
 const generateProjects = (projectsArr) => {
   return `
         <section class="my-3" id="portfolio">
@@ -59,11 +60,10 @@ const generateProjects = (projectsArr) => {
 };
 
 // string interpolation: subbing text for a variable built into string
-// template literal `` embeds JS expressions into string
-//   used in src file that has fx we want to make available
+// export funxtion to generate entire page
+// used in src file that has fx we want to make available
 module.exports = (templateData) => {
-  console.log(templateData);
-
+  // console.log(templateData);
   // destructure data from templateDAta based on section property key names
   // create 3 variables based on data in templateData
   // rest operator, takes the rest of data that hasn't been destructured, stores in another obj
@@ -99,12 +99,11 @@ module.exports = (templateData) => {
         ${generateAbout(about)}
         ${generateProjects(projects)}
       </main>
-
-          <footer class="container text-center py-3">
-              <h3 class="text-dark">&copy;${new Date().getFullYear()} by ${
+        <footer class="container text-center py-3">
+            <h3 class="text-dark">&copy;${new Date().getFullYear()} by ${
     header.name
   } </h3>
-          </footer>
+        </footer>
         </body>
         </html>
       `;

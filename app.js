@@ -1,10 +1,12 @@
+// imports exported object from generate-site, obj destr creates var out of properties instead of using dot notation
+const { writeFile, copyFile } = require("./utils/generate-site");
 const inquirer = require("inquirer");
 // require used in destination files(app.js) we want to receive exported fx
-const fs = require("fs");
 const generatePage = require("./src/page-template");
 
 const promptUser = () => {
-  return inquirer.prompt([
+  return inquirer
+  .prompt([
     {
       type: "input",
       name: "name",
@@ -70,7 +72,7 @@ const promptProject = (portfolioData) => {
           if (projectNameInput) {
             return true;
           } else {
-            console.log("Please enter your project name!");
+            console.log("You need to enter a project name!");
             return false;
           }
         },
@@ -83,7 +85,7 @@ const promptProject = (portfolioData) => {
           if (descriptionInput) {
             return true;
           } else {
-            console.log("Please enter your project description!");
+            console.log("You need to enter a project description!");
             return false;
           }
         },
@@ -110,7 +112,7 @@ const promptProject = (portfolioData) => {
           if (linkInput) {
             return true;
           } else {
-            console.log("Please enter your project GitHub link!");
+            console.log("You need to enter a project GitHub link!");
             return false;
           }
         },
@@ -139,66 +141,55 @@ const promptProject = (portfolioData) => {
     });
 };
 
-const mockData = {
-  name: "Lernantino",
-  github: "lernantino",
-  confirmAbout: true,
-  about:
-    "Duis consectetur nunc nunc. Morbi finibus non sapien nec pharetra. Fusce nec dignissim orci, ac interdum ipsum. Morbi mattis justo sed commodo pellentesque. Nulla eget fringilla nulla. Integer gravida magna mi, id efficitur metus tempus et.",
-  projects: [
-    {
-      name: "Run Buddy",
-      description:
-        "Duis consectetur nunc nunc. Morbi finibus non sapien nec pharetra. Fusce nec dignissim orci, ac interdum ipsum. Morbi mattis justo sed commodo pellentesque. Nulla eget fringilla nulla. Integer gravida magna mi, id efficitur metus tempus et. Nam fringilla elit dapibus pellentesque cursus.",
-      languages: ["HTML", "CSS"],
-      link: "https://github.com/lernantino/run-buddy",
-      feature: true,
-      confirmAddProject: true,
-    },
-    {
-      name: "Taskinator",
-      description:
-        "Duis consectetur nunc nunc. Morbi finibus non sapien nec pharetra. Fusce nec dignissim orci, ac interdum ipsum. Morbi mattis justo sed commodo pellentesque. Nulla eget fringilla nulla. Integer gravida magna mi, id efficitur metus tempus et. Nam fringilla elit dapibus pellentesque cursus.",
-      languages: ["JavaScript", "HTML", "CSS"],
-      link: "https://github.com/lernantino/taskinator",
-      feature: true,
-      confirmAddProject: true,
-    },
-    {
-      name: "Taskmaster Pro",
-      description:
-        "Duis consectetur nunc nunc. Morbi finibus non sapien nec pharetra. Fusce nec dignissim orci, ac interdum ipsum. Morbi mattis justo sed commodo pellentesque. Nulla eget fringilla nulla. Integer gravida magna mi, id efficitur metus tempus et. Nam fringilla elit dapibus pellentesque cursus.",
-      languages: ["JavaScript", "jQuery", "CSS", "HTML", "Bootstrap"],
-      link: "https://github.com/lernantino/taskmaster-pro",
-      feature: false,
-      confirmAddProject: true,
-    },
-    {
-      name: "Robot Gladiators",
-      description:
-        "Duis consectetur nunc nunc. Morbi finibus non sapien nec pharetra. Fusce nec dignissim orci, ac interdum ipsum. Morbi mattis justo sed commodo pellentesque.",
-      languages: ["JavaScript"],
-      link: "https://github.com/lernantino/robot-gladiators",
-      feature: false,
-      confirmAddProject: false,
-    },
-  ],
-};
-
 // promise chain: series of fxs that return promises allowing to attach .then()
+
 promptUser()
+//   promptProject() captures returning data from promptUser()
+// recursively call promptProject() for as many projects as user wants to add
   .then(promptProject)
-  .then(portfolioData => {
-    const pageHTML = generatePage(portfolioData);
-
-    fs.writeFile("./index.html", pageHTML, err => {
-      //   stops execution of code if error exists
-      if (err) throw new Error(err);
-
-      console.log("Page created! Check out index.html in this directory to see it!");
-    });
+  // each project pushed into projects array in portfolioData
+  //   final set of data returned to next .then()
+  .then((portfolioData) => {
+    //   generatePage() returns finished HTML template code into pageHTML
+    return generatePage(portfolioData);
+  })
+  .then(pageHTML => {
+    //   returns a promise to the next .then()
+      return writeFile(pageHTML);
+  })
+  .then(writeFileResponse => {
+    //   upon successful file creation, take writeFileResponse obj from 
+    // writeFile()'s resolve() and log it
+      console.log(writeFileResponse);
+    //   promise returned by copyFile() lets us know if CSS copied correctly
+      return copyFile();
+  })
+  .then(copyFileResponse => {
+      console.log(copyFileResponse);
+  })
+  .catch(err => {
+    console.log(err);
   });
-const pageHTML = generatePage(mockData);
+
+    // fs.writeFile("./dist/index.html", pageHTML, err => {
+    //   //   stops execution of code if error exists
+    //   if (err) {
+    //     console.log(err);
+    //     return;
+    //   }
+    //   console.log(
+    //     "Page created! Check out index.html in this directory to see it!"
+    //   );
+
+    // //   .copyFile() takes source, destination, callback
+    //   fs.copyFile("./src/style.css", "./dist/style.css", err => {
+    //     if (err) {
+    //       console.log(err);
+    //       return;
+    //     }
+    //     console.log("Style sheet copied successfully!");
+    //   });
+    // });
 
 // // no parentheses around profileDataArr parameter
 // const printProfileData = (profileDataArr) => {
