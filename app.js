@@ -170,38 +170,3 @@ promptUser()
   .catch(err => {
     console.log(err);
   });
-
-    // fs.writeFile("./dist/index.html", pageHTML, err => {
-    //   //   stops execution of code if error exists
-    //   if (err) {
-    //     console.log(err);
-    //     return;
-    //   }
-    //   console.log(
-    //     "Page created! Check out index.html in this directory to see it!"
-    //   );
-
-    // //   .copyFile() takes source, destination, callback
-    //   fs.copyFile("./src/style.css", "./dist/style.css", err => {
-    //     if (err) {
-    //       console.log(err);
-    //       return;
-    //     }
-    //     console.log("Style sheet copied successfully!");
-    //   });
-    // });
-
-// // no parentheses around profileDataArr parameter
-// const printProfileData = (profileDataArr) => {
-//   for (let i = 0; i < profileDataArr.length; i++) {
-//     console.log(profileDataArr[i]);
-//   }
-//   console.log("================");
-
-//   //   is the same as....
-//   // forEach executes function on each element of array using value
-//   //  of element at that iteration as argument
-//   profileDataArr.forEach((profileItem) => console.log(profileItem));
-// };
-
-// printProfileData(profileDataArgs);

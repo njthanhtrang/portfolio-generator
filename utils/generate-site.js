@@ -34,6 +34,7 @@ const copyFile = () => {
     });
 };
 
+// module.exports  can only be used ONCE in a file!
 // export object with 2 fxs as methods
     // method name, value of method replaced by shorthand property name
     // writeFile: writeFile,
