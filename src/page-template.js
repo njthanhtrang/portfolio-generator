@@ -6,7 +6,7 @@ const generateAbout = (aboutText) => {
   }
   // template literal `` embeds JS expressions into string
   return `
-    section class="my-3" id="about">
+    <section class="my-3" id="about">
       <h2 class="text-dark bg-primary p-2 display-inline-block">About Me</h2>
       <p>${aboutText}</p>
     </section>
@@ -59,6 +59,7 @@ const generateProjects = (projectsArr) => {
     `;
 };
 
+// module.exports can only be used ONCE in a file! if multiple functions or data, set to obj or arr
 // string interpolation: subbing text for a variable built into string
 // export funxtion to generate entire page
 // used in src file that has fx we want to make available

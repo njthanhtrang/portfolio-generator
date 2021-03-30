@@ -1,8 +1,8 @@
-// imports exported object from generate-site, obj destr creates var out of properties instead of using dot notation
-const { writeFile, copyFile } = require("./utils/generate-site");
 const inquirer = require("inquirer");
 // require used in destination files(app.js) we want to receive exported fx
 const generatePage = require("./src/page-template");
+// imports exported object from generate-site, obj destr creates var out of properties instead of using dot notation
+const { writeFile, copyFile } = require("./utils/generate-site");
 
 const promptUser = () => {
   return inquirer
@@ -50,7 +50,7 @@ const promptUser = () => {
   ]);
 };
 
-const promptProject = (portfolioData) => {
+const promptProject = portfolioData => {
   console.log(`
     =================
     Add a New Project

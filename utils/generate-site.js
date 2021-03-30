@@ -34,7 +34,7 @@ const copyFile = () => {
     });
 };
 
-// module.exports  can only be used ONCE in a file!
+// module.exports can only be used ONCE in a file! if multiple functions or data, set to obj or arr
 // export object with 2 fxs as methods
     // method name, value of method replaced by shorthand property name
     // writeFile: writeFile,
